@@ -196,7 +196,6 @@ namespace TJAPlayer3
             public int nスクロール方向;
             public int n描画優先度; //(特殊)現状連打との判断目的で使用
             public ENoteState eNoteState;
-            public EAVI種別 eAVI種別;
             public EInstrumentPad e楽器パート = EInstrumentPad.UNKNOWN;
             public int nチャンネル番号;
             public int VideoStartTimeMs;
@@ -1098,7 +1097,6 @@ namespace TJAPlayer3
         public string[] NOTESDESIGNER = new string[(int)Difficulty.Total] { "", "", "", "", "", "", "" };
         public bool EXPLICIT;
         public string SELECTBG;
-        public Eジャンル eジャンル;
         public bool HIDDENLEVEL;
         public STDGBVALUE<int> LEVEL;
         public bool bLyrics;
@@ -1306,7 +1304,6 @@ namespace TJAPlayer3
             this.SELECTBG = "";
             this.bLyrics = false;
             this.usingLyricsFile = false;
-            this.eジャンル = Eジャンル.None;
             this.PREVIEW = "";
             this.PREIMAGE = "";
             this.BACKGROUND = "";
@@ -1725,7 +1722,7 @@ namespace TJAPlayer3
 
             switch (eRandom)
             {
-                case Eランダムモード.MIRROR:
+                case ERandomMode.MIRROR:
                     foreach (var chip in this.listChip)
                     {
                         switch (chip.nチャンネル番号)
@@ -1747,7 +1744,7 @@ namespace TJAPlayer3
                         }
                     }
                     break;
-                case Eランダムモード.RANDOM:
+                case ERandomMode.RANDOM:
                     foreach (var chip in this.listChip)
                     {
                         int n = rnd.Next(100);
@@ -1774,7 +1771,7 @@ namespace TJAPlayer3
                         }
                     }
                     break;
-                case Eランダムモード.SUPERRANDOM:
+                case ERandomMode.SUPERRANDOM:
                     foreach (var chip in this.listChip)
                     {
                         int n = rnd.Next(100);
@@ -1801,7 +1798,7 @@ namespace TJAPlayer3
                         }
                     }
                     break;
-                case Eランダムモード.HYPERRANDOM:
+                case ERandomMode.MIRRORRANDOM:
                     foreach (var chip in this.listChip)
                     {
                         int n = rnd.Next(100);
@@ -1828,7 +1825,7 @@ namespace TJAPlayer3
                         }
                     }
                     break;
-                case Eランダムモード.OFF:
+                case ERandomMode.OFF:
                 default:
                     break;
             }
@@ -1851,7 +1848,7 @@ namespace TJAPlayer3
                 }
             }
 
-            if (eRandom != Eランダムモード.OFF)
+            if (eRandom != ERandomMode.OFF)
             {
                 #region[ list作成 ]
                 //ひとまずチップだけのリストを作成しておく。
@@ -1879,7 +1876,7 @@ namespace TJAPlayer3
         #region [ チップの再生と停止 ]
         public void tチップの再生(CChip pChip, long n再生開始システム時刻ms)
         {
-            if (TJAPlayer3.ConfigIni.b演奏速度が一倍速であるとき以外音声を再生しない && TJAPlayer3.ConfigIni.n演奏速度 != 20)
+            if (TJAPlayer3.ConfigIni.b演奏速度が一倍速であるとき以外音声を再生しない && TJAPlayer3.ConfigIni.nSongSpeed != 20)
                 return;
 
             if (pChip.n整数値_内部番号 >= 0)
@@ -3526,7 +3523,6 @@ namespace TJAPlayer3
                 chip1.dbSCROLL = this.dbNowScroll;
                 chip1.n整数値 = 0x01;
                 chip1.n整数値_内部番号 = 1;
-                chip1.eAVI種別 = EAVI種別.AVI;
 
                 // チップを配置。
 

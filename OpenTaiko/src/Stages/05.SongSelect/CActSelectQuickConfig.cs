@@ -62,7 +62,7 @@ namespace TJAPlayer3
 				"(ScrollSpeed=x0.5 means half speed)" ) );
 			#endregion
 			#region [ 共通 Dark/Risky/PlaySpeed ]
-			l.Add( new CItemInteger( "演奏速度", 5, 400, TJAPlayer3.ConfigIni.n演奏速度,
+			l.Add( new CItemInteger( "演奏速度", 5, 400, TJAPlayer3.ConfigIni.nSongSpeed,
 				"曲の演奏速度を、速くしたり遅くした\n" +
 				"りすることができます。\n" +
 				"（※一部のサウンドカードでは正しく\n" +
@@ -128,10 +128,10 @@ namespace TJAPlayer3
 					break;
 
 				case (int) EOrder.PlaySpeed:
-					TJAPlayer3.ConfigIni.n演奏速度 = (int) GetObj現在値( (int) EOrder.PlaySpeed );
+					TJAPlayer3.ConfigIni.nSongSpeed = (int) GetObj現在値( (int) EOrder.PlaySpeed );
 					break;
 				case (int) EOrder.Random:
-                    TJAPlayer3.ConfigIni.eRandom[TJAPlayer3.SaveFile] = (Eランダムモード)GetIndex( (int)EOrder.Random );
+                    TJAPlayer3.ConfigIni.eRandom[TJAPlayer3.SaveFile] = (ERandomMode)GetIndex( (int)EOrder.Random );
 					break;
 				case (int) EOrder.Stealth:
                     TJAPlayer3.ConfigIni.eSTEALTH[TJAPlayer3.SaveFile] = (EStealthMode)GetIndex( (int)EOrder.Stealth );
@@ -174,30 +174,13 @@ namespace TJAPlayer3
 			// (Autoのパラメータ切り替え時は実際に値設定していないため、キャンセルまたはRetern, More...時に値設定する必要有り)
 		}
 
-		/// <summary>
-		/// 1つの値を、全targetに適用する。RiskyやDarkなど、全tatgetで共通の設定となるもので使う。
-		/// </summary>
-		/// <param name="order">設定項目リストの順番</param>
-		/// <param name="index">設定値(index)</param>
-		private void SetValueToAllTarget( int order, int index )
-		{
-			for ( int i = 0; i < 3; i++ )
-			{
-				lci[ nCurrentConfigSet ][ i ][ order ].SetIndex( index );
-			}
-		}
-		
 
 		/// <summary>
 		/// ConfigIni.bAutoPlayに簡易CONFIGの状態を反映する
 		/// </summary>
 		private void SetAutoParameters()
 		{
-			for ( int target = 0; target < 3; target++ )
-			{
-				int[] pa = { (int) Eレーン.LC, (int) Eレーン.GtR, (int) Eレーン.BsR };
-				int start = pa[ target ];
-            }
+
         }
 
 		// CActivity 実装

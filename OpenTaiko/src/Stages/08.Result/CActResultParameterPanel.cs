@@ -669,7 +669,7 @@ namespace TJAPlayer3
 								TJAPlayer3.Tx.Result_Score_Number.vcScaleRatio.Y = ctMainCounter.CurrentValue <= AnimeCount1 + 270 ? 1.0f + (float)Math.Sin((ctMainCounter.CurrentValue - AnimeCount1) / 1.5f * (Math.PI / 180)) * 0.65f :
 																				  ctMainCounter.CurrentValue <= AnimeCount1 + 360 ? 1.0f - (float)Math.Sin((ctMainCounter.CurrentValue - AnimeCount1 - 270) * (Math.PI / 180)) * 0.1f : 1.0f;
 
-								this.tスコア文字表示(score_x, score_y, (int)TJAPlayer3.stage演奏ドラム画面.actScore.Get(EInstrumentPad.DRUMS, i), numScale);// TJAPlayer3.stage演奏ドラム画面.CChartScore[i].nScore.ToString()));
+								this.tスコア文字表示(score_x, score_y, (int)TJAPlayer3.stage演奏ドラム画面.actScore.Get(i), numScale);// TJAPlayer3.stage演奏ドラム画面.CChartScore[i].nScore.ToString()));
 
 								if (!b音声再生[8])
 								{
@@ -1002,15 +1002,15 @@ namespace TJAPlayer3
 						else if (gaugeValues[p] >= 40.0f)
 							Mood = 1;
 
-						if (TJAPlayer3.stage結果.nクリア[p] == 3)
+						if (TJAPlayer3.stage結果.nクリア[p] == 4)
 						{
 							MoodV2 = 5;
 						}
-						else if (TJAPlayer3.stage結果.nクリア[p] == 2)
+						else if (TJAPlayer3.stage結果.nクリア[p] == 3)
 						{
 							MoodV2 = 4;
 						}
-						else if (TJAPlayer3.stage結果.nクリア[p] == 1)
+						else if (TJAPlayer3.stage結果.nクリア[p] >= 1)
 						{
 							if (gaugeValues[p] >= 100.0f)
 							{
@@ -1192,7 +1192,7 @@ namespace TJAPlayer3
 						{
 							#region [Crown apparition]
 
-							int crownEffect_width = TJAPlayer3.Tx.Result_CrownEffect.szTextureSize.Width / 3;
+							int crownEffect_width = TJAPlayer3.Tx.Result_CrownEffect.szTextureSize.Width / 4;
 							int crownEffect_height = TJAPlayer3.Tx.Result_CrownEffect.szTextureSize.Height / 4;
 
 							if (ctMainCounter.CurrentValue <= ScoreApparitionTimeStamp + 2680)

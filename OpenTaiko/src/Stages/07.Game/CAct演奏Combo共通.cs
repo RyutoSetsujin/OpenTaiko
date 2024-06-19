@@ -159,11 +159,6 @@ namespace TJAPlayer3
 			private int p4;
 			private int p5;
 		}
-		public C演奏判定ライン座標共通 演奏判定ライン座標
-		{
-			get;
-			set;
-		}
 
 		protected enum EEvent { 非表示, 数値更新, 同一数値, ミス通知 }
 		protected enum EMode { 非表示中, 進行表示中, 残像表示中 }
@@ -321,24 +316,8 @@ namespace TJAPlayer3
 		}
 
 
-		// コンストラクタ
-
-		public CAct演奏Combo共通()
-		{
-			this.IsDeActivated = true;
-
-			// 180度分のジャンプY座標差分を取得。(0度: 0 → 90度:-15 → 180度: 0)
-			for (int i = 0; i < 180; i++)
-				this.nジャンプ差分値[i] = (int)(-15.0 * Math.Sin((Math.PI * i) / 180.0));
-			演奏判定ライン座標 = new C演奏判定ライン座標共通();
-		}
-
-
 		// メソッド
 
-		protected virtual void tコンボ表示_ドラム(int nCombo値, int nジャンプインデックス)
-		{
-		}
 
 		private void showComboEffect(int cat, int i, int rightX, int y, int nPlayer)
         {
@@ -618,25 +597,6 @@ namespace TJAPlayer3
 			//-----------------
 			#endregion
 		}
-
-		protected virtual void tコンボ表示_ギター(int nCombo値, int nジャンプインデックス)
-		{
-		}
-		protected virtual void tコンボ表示_ベース(int nCombo値, int nジャンプインデックス)
-		{
-		}
-		protected void tコンボ表示_ギター(int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス)
-		{
-
-		}
-		protected void tコンボ表示_ベース(int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス)
-		{
-
-		}
-		protected void tコンボ表示_ギターベース(int nCombo値, int n表示中央X, int n表示中央Y, int nジャンプインデックス)
-		{
-		}
-
 
 		// CActivity 実装
 

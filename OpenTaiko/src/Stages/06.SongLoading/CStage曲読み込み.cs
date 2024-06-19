@@ -92,7 +92,7 @@ namespace TJAPlayer3
 			    // player and the special song title and subtitle
 			    // of the .tja used to perform input calibration
 			    TJAPlayer3.IsPerformingCalibration =
-			        !TJAPlayer3.ConfigIni.b太鼓パートAutoPlay[0] &&
+			        !TJAPlayer3.ConfigIni.bAutoPlay[0] &&
 			        TJAPlayer3.ConfigIni.nPlayerCount == 1 &&
 			        str曲タイトル == "Input Calibration" &&
 			        strサブタイトル == "TJAPlayer3 Developers";
@@ -567,7 +567,7 @@ namespace TJAPlayer3
 
 				case CStage.EPhase.SongLoading_LoadWAVFile:
 					{
-						int looptime = (TJAPlayer3.ConfigIni.b垂直帰線待ちを行う)? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
+						int looptime = (TJAPlayer3.ConfigIni.bEnableVSync)? 3 : 1;	// VSyncWait=ON時は1frame(1/60s)あたり3つ読むようにする
 						for ( int i = 0; i < looptime && nWAVcount <= TJAPlayer3.DTX.listWAV.Count; i++ )
 						{
 							if ( TJAPlayer3.DTX.listWAV[ nWAVcount ].listこのWAVを使用するチャンネル番号の集合.Count > 0 )	// #28674 2012.5.8 yyagi
@@ -611,7 +611,7 @@ namespace TJAPlayer3
 						TimeSpan span;
 						DateTime timeBeginLoadBMPAVI = DateTime.Now;
 
-						if ( TJAPlayer3.ConfigIni.bAVI有効 )
+						if ( TJAPlayer3.ConfigIni.bEnableAVI )
 							TJAPlayer3.DTX.tAVIの読み込み();
 						span = ( TimeSpan ) ( DateTime.Now - timeBeginLoadBMPAVI );
 

@@ -9,9 +9,9 @@ using System.Drawing;
 
 namespace TJAPlayer3
 {
-	class CAct演奏DrumsTrainingMode : CActivity
+	class CActImplTrainingMode : CActivity
 	{
-		public CAct演奏DrumsTrainingMode()
+		public CActImplTrainingMode()
 		{
 			base.IsDeActivated = true;
 		}
@@ -111,7 +111,7 @@ namespace TJAPlayer3
 					base.IsFirstDraw = false;
 				}
 
-				TJAPlayer3.act文字コンソール.tPrint(0, 0, C文字コンソール.Eフォント種別.白, "TRAINING MODE (BETA)");
+				TJAPlayer3.actTextConsole.tPrint(0, 0, CTextConsole.EFontType.White, "TRAINING MODE (BETA)");
 
 				if (TJAPlayer3.ConfigIni.KeyAssign.KeyIsPressed(TJAPlayer3.ConfigIni.KeyAssign.Drums.TrainingPause))
 				{
@@ -215,9 +215,9 @@ namespace TJAPlayer3
 				{
 					if (this.bTrainingPAUSE)
 					{
-						if (TJAPlayer3.ConfigIni.n演奏速度 > 6)
+						if (TJAPlayer3.ConfigIni.nSongSpeed > 6)
 						{
-							TJAPlayer3.ConfigIni.n演奏速度 = TJAPlayer3.ConfigIni.n演奏速度 - 2;
+							TJAPlayer3.ConfigIni.nSongSpeed = TJAPlayer3.ConfigIni.nSongSpeed - 2;
 							this.tMatchWithTheChartDisplayPosition(false);
 						}
 					}
@@ -226,9 +226,9 @@ namespace TJAPlayer3
 				{
 					if (this.bTrainingPAUSE)
 					{
-						if (TJAPlayer3.ConfigIni.n演奏速度 < 399)
+						if (TJAPlayer3.ConfigIni.nSongSpeed < 399)
 						{
-							TJAPlayer3.ConfigIni.n演奏速度 = TJAPlayer3.ConfigIni.n演奏速度 + 2;
+							TJAPlayer3.ConfigIni.nSongSpeed = TJAPlayer3.ConfigIni.nSongSpeed + 2;
 							this.tMatchWithTheChartDisplayPosition(false);
 						}
 					}

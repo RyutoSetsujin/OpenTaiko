@@ -68,7 +68,7 @@ namespace TJAPlayer3
 			get;
 			private set;
 		}
-		public static C文字コンソール act文字コンソール
+		public static CTextConsole actTextConsole
 		{ 
 			get;
 			private set;
@@ -677,10 +677,10 @@ namespace TJAPlayer3
 				break;
 			}
 
-			WindowPosition = new Silk.NET.Maths.Vector2D<int>(ConfigIni.n初期ウィンドウ開始位置X, ConfigIni.n初期ウィンドウ開始位置Y);
-			WindowSize = new Silk.NET.Maths.Vector2D<int>(ConfigIni.nウインドウwidth, ConfigIni.nウインドウheight);
-			FullScreen = ConfigIni.b全画面モード;
-			VSync = ConfigIni.b垂直帰線待ちを行う;
+			WindowPosition = new Silk.NET.Maths.Vector2D<int>(ConfigIni.nWindowBaseXPosition, ConfigIni.nWindowBaseYPosition);
+			WindowSize = new Silk.NET.Maths.Vector2D<int>(ConfigIni.nWindowWidth, ConfigIni.nWindowHeight);
+			FullScreen = ConfigIni.bFullScreen;
+			VSync = ConfigIni.bEnableVSync;
 			Framerate = 0;
 			
 			base.Configuration();
@@ -753,12 +753,12 @@ namespace TJAPlayer3
 		}
 		protected override void OnExiting()
 		{
-			ConfigIni.n初期ウィンドウ開始位置X = WindowPosition.X;
-			ConfigIni.n初期ウィンドウ開始位置Y = WindowPosition.Y;
-			ConfigIni.nウインドウwidth = WindowSize.X;
-			ConfigIni.nウインドウheight = WindowSize.Y;
-			ConfigIni.b全画面モード = FullScreen;
-			ConfigIni.b垂直帰線待ちを行う = VSync;
+			ConfigIni.nWindowBaseXPosition = WindowPosition.X;
+			ConfigIni.nWindowBaseYPosition = WindowPosition.Y;
+			ConfigIni.nWindowWidth = WindowSize.X;
+			ConfigIni.nWindowHeight = WindowSize.Y;
+			ConfigIni.bFullScreen = FullScreen;
+			ConfigIni.bEnableVSync = VSync;
 			Framerate = 0;
 			
 			this.t終了処理();
@@ -1784,9 +1784,9 @@ for (int i = 0; i < 3; i++) {
 
 									TJAPlayer3.ConfigIni.bTimeStretch = DTXVmode.TimeStretch;
 									SoundManager.bIsTimeStretch = DTXVmode.TimeStretch;
-									if ( TJAPlayer3.ConfigIni.b垂直帰線待ちを行う != DTXVmode.VSyncWait )
+									if ( TJAPlayer3.ConfigIni.bEnableVSync != DTXVmode.VSyncWait )
 									{
-										TJAPlayer3.ConfigIni.b垂直帰線待ちを行う = DTXVmode.VSyncWait;
+										TJAPlayer3.ConfigIni.bEnableVSync = DTXVmode.VSyncWait;
 										TJAPlayer3.app.b次のタイミングで垂直帰線同期切り替えを行う = true;
 									}
 								}
@@ -2355,7 +2355,7 @@ for (int i = 0; i < 3; i++) {
 			#region [ 全画面_ウインドウ切り替え ]
 			if ( this.b次のタイミングで全画面_ウィンドウ切り替えを行う )
 			{
-				ConfigIni.b全画面モード = !ConfigIni.b全画面モード;
+				ConfigIni.bFullScreen = !ConfigIni.bFullScreen;
 				app.ToggleWindowMode();
 				this.b次のタイミングで全画面_ウィンドウ切り替えを行う = false;
 			}
@@ -2363,7 +2363,7 @@ for (int i = 0; i < 3; i++) {
 			#region [ 垂直基線同期切り替え ]
 			if ( this.b次のタイミングで垂直帰線同期切り替えを行う )
 			{
-				VSync = ConfigIni.b垂直帰線待ちを行う;
+				VSync = ConfigIni.bEnableVSync;
 				this.b次のタイミングで垂直帰線同期切り替えを行う = false;
 			}
 			#endregion
@@ -2627,7 +2627,7 @@ for (int i = 0; i < 3; i++) {
 			#region [ ログ出力開始 ]
 			//---------------------
 			Trace.AutoFlush = true;
-			if( ConfigIni.bログ出力 )
+			if( ConfigIni.bOutputLogs )
 			{
 				try
 				{
@@ -2747,13 +2747,13 @@ for (int i = 0; i < 3; i++) {
 			Trace.Indent();
 			try
 			{
-				act文字コンソール = new C文字コンソール();
+				actTextConsole = new CTextConsole();
 				Trace.TraceInformation( "文字コンソールを生成しました。" );
-				act文字コンソール.Activate();
+				actTextConsole.Activate();
 				//if (!ConfigIni.PreAssetsLoading) 
 				{
-					act文字コンソール.CreateManagedResource();
-					act文字コンソール.CreateUnmanagedResource();
+					actTextConsole.CreateManagedResource();
+					actTextConsole.CreateUnmanagedResource();
 				}
 				Trace.TraceInformation( "文字コンソールを活性化しました。" );
 				Trace.TraceInformation( "文字コンソールの初期化を完了しました。" );
@@ -2990,7 +2990,7 @@ for (int i = 0; i < 3; i++) {
 			SaveFile = 0;
 			this.listトップレベルActivities = new List<CActivity>();
 			this.listトップレベルActivities.Add( actEnumSongs );
-			this.listトップレベルActivities.Add( act文字コンソール );
+			this.listトップレベルActivities.Add( actTextConsole );
 			this.listトップレベルActivities.Add( stage起動 );
 			this.listトップレベルActivities.Add( stageタイトル );
 //			this.listトップレベルActivities.Add( stageオプション );
@@ -3328,19 +3328,19 @@ for (int i = 0; i < 3; i++) {
 				#endregion
 				#region [ 文字コンソールの終了処理 ]
 				//---------------------
-				if (act文字コンソール != null)
+				if (actTextConsole != null)
 				{
 					Trace.TraceInformation( "文字コンソールの終了処理を行います。" );
 					Trace.Indent();
 					try
 					{
-						act文字コンソール.DeActivate();
+						actTextConsole.DeActivate();
 						//if (!ConfigIni.PreAssetsLoading) 
 						{
-							act文字コンソール.ReleaseManagedResource();
-							act文字コンソール.ReleaseUnmanagedResource();
+							actTextConsole.ReleaseManagedResource();
+							actTextConsole.ReleaseUnmanagedResource();
 						}
-						act文字コンソール = null;
+						actTextConsole = null;
 						Trace.TraceInformation( "文字コンソールの終了処理を完了しました。" );
 					}
 					catch( Exception exception6 )
@@ -3510,9 +3510,9 @@ for (int i = 0; i < 3; i++) {
         {
             Trace.TraceInformation("スキン変更:" + TJAPlayer3.Skin.GetCurrentSkinSubfolderFullName(false));
 
-            TJAPlayer3.act文字コンソール.DeActivate();
-			act文字コンソール.ReleaseManagedResource();
-			act文字コンソール.ReleaseUnmanagedResource();
+            TJAPlayer3.actTextConsole.DeActivate();
+			actTextConsole.ReleaseManagedResource();
+			actTextConsole.ReleaseUnmanagedResource();
 
             TJAPlayer3.Skin.Dispose();
             TJAPlayer3.Skin = null;
@@ -3524,9 +3524,9 @@ for (int i = 0; i < 3; i++) {
 
 			TJAPlayer3.Tx.LoadTexture();
 
-            TJAPlayer3.act文字コンソール.Activate();
-			act文字コンソール.CreateManagedResource();
-			act文字コンソール.CreateUnmanagedResource();
+            TJAPlayer3.actTextConsole.Activate();
+			actTextConsole.CreateManagedResource();
+			actTextConsole.CreateUnmanagedResource();
 			TJAPlayer3.NamePlate.RefleshSkin();
 			CActSelectPopupMenu.RefleshSkin();
 			CActSelect段位リスト.RefleshSkin();
