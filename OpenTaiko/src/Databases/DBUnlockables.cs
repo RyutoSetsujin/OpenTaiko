@@ -113,7 +113,7 @@ namespace TJAPlayer3
                     case "cs":
                     case "cm":
                         if (this.Values.Length == 1)
-                            return tConditionMet(new int[] { TJAPlayer3.SaveFileInstances[player].data.Medals }, screen);
+                            return tConditionMet(new int[] { (int)TJAPlayer3.SaveFileInstances[player].data.Medals }, screen);
                         else
                             return (false, CLangManager.LangInstance.GetString(90005) + this.Condition + " requires " + this.RequiredArgCount.ToString() + " values.");
                     case "dp":
@@ -308,7 +308,7 @@ namespace TJAPlayer3
                             if (_aimedStatus == (int)EClearStatus.NONE) _satifsiedCount = chartStats.SongGenrePlays.TryGetValue(_genreName, out var value) ? value : 0;
                             else if (_aimedStatus <= (int)EClearStatus.CLEAR) _satifsiedCount = chartStats.SongGenreClears.TryGetValue(_genreName, out var value) ? value : 0;
                             else if (_aimedStatus == (int)EClearStatus.FC) _satifsiedCount = chartStats.SongGenreFCs.TryGetValue(_genreName, out var value) ? value : 0;
-                            else return _satifsiedCount = chartStats.SongGenrePerfects.TryGetValue(_genreName, out var value) ? value : 0;
+                            else _satifsiedCount = chartStats.SongGenrePerfects.TryGetValue(_genreName, out var value) ? value : 0;
 
                             if (_satifsiedCount >= _songCount) _count++;
                         }
